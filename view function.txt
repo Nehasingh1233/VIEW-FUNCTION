@@ -1,0 +1,55 @@
+--VIEW
+
+create table NA_department001(
+dep_id int primary key,
+dep_name varchar(20) not null,
+)
+insert into NA_department001 values(1,'it') 
+insert into NA_department001 values(2,'acc')
+insert into NA_department001 values(3,'hr')
+
+create table NA_EMPLOYEES001(
+emp_id int primary key ,
+emp_name varchar(20),
+emp_phone varchar(20),
+emp_age int  check(emp_age>=18),
+emp_address varchar(20) default 'not provided'
+);
+
+insert into NA_EMPLOYEES001 values (100,'x','56778766',18,'not provided')
+insert into NA_EMPLOYEES001 values (101,'y','1111766',19,'not provided')
+insert into NA_EMPLOYEES001 values (102,'c','3338766',20,'not provided')
+
+select * from  NA_department001
+
+alter table  NA_department001 ADD CONSTRAINT fk_emp_id FOREIGN KEY (dep_id)
+references NA_department001(dep_id)
+
+
+
+create view vw_employee_details
+AS
+select* from  NA_EMPLOYEES001
+
+select* from vw_employee_details
+
+insert into vw_employee_details values(105,'Z','51111766',18,'not provided')
+insert into vw_employee_details values(108,'H','51111766',28,'not provided')
+insert into vw_employee_details values(109,'n','51111766',26,'not provided')
+
+delete  vw_employee_details
+where emp_id= 108
+
+
+create view vw_employee_details1
+AS
+select v1.emp_id,
+       v1.emp_name,
+       v1.emp.phone,
+       v1.emp_age,
+       v1.emp_address,
+       v1.dep_id
+from  NA_EMPLOYEES001 as v1
+inner join NA_department001 as d 
+on v1.[dep_id]=d.[dep_id]
+
